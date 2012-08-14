@@ -5,8 +5,9 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
      //GLOBAL VARS
-	var sessionId = "30000"; 
-    	var socket = new WebSocket("ws://10.255.132.175:8080/");   
+	var sessionId = "30000";
+	var domain = document.domain;
+    	var socket = new WebSocket("ws://" + domain + ":8080/");   
 	socket.onopen = function () {
 	console.log("Websocket connected");
 	$("#websocketInfo").empty().html("Connected to websocket server");		
