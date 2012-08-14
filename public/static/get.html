@@ -24,7 +24,8 @@
 			if(json.fileType == "image/jpeg"){	
 			$("#dataReceiver").empty().html('<img src="/api/talklive/' + json.sessionId + '/' + 
 				json.fileName + '">');}
-			if(json.fileType == "audio/mpeg"){	
+			if(json.fileType == "audio/mpeg" || json.fileType == "audio/mp3"){
+			json.fileType = "audio/mpeg";	
 			$("#dataReceiver").empty().html('<audio autoplay="autoplay" controls="controls">' +
 				'<source src="/api/talklive/' +
 				json.sessionId + '/' + 
