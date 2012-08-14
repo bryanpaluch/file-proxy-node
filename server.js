@@ -163,6 +163,7 @@ function processWSmessage(data, id) {
 	case 'newGetSession':
 		console.log("new get session request received");
 		addSessionReceiver(id, data.sessionId);
+		send_join_ack(data.sessionId, data); 
 		break;
 	case 'newUploadSession':
 		console.log("new upload session created");
@@ -196,8 +197,8 @@ function addSessionUploader(id, sessionId) {
 	var session = sessions[sessionId];
 	if (session) {
 		console.log("session already created adding connection");
-		session[id] = "uploader";
-		sessions[sessionId] = session;
+		sessions[sessionId] = {};
+		sessions[sessionId][id] = "uploader";
 	}
 	else {
 		sessions[sessionId] = {};
@@ -218,6 +219,18 @@ function send_upload_start(sessionId, data) {
 
 }
 function send_upload_ack(sessionId, data) {
+	var session = sessions[sessionId]
+	if (session) {
+		console.log("session found");
+		for (id in session) {
+			if (session[id] == "uploader") {
+				sendToConnectionId(id, data);
+			}
+		}
+	}
+
+}
+function send_join_ack(sessionId, data) {
 	var session = sessions[sessionId]
 	if (session) {
 		console.log("session found");

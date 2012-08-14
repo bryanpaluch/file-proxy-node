@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload Files using XMLHttpRequest - Minimal</title>
+    <title>Transfer files using nodejs</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script type="text/javascript">
      //GLOBAL VARS
@@ -11,7 +11,7 @@
         socket.onopen = function () {
         console.log("Websocket connected");
         $("#websocketInfo").empty().html("Connected to websocket server");              
-        
+	$("#subbutton").attr("disabled", "disabled");        
 	sessionId = getUrlVars()["sessionId"];
         socket.send(JSON.stringify({action : "newUploadSession", sessionId : sessionId}));
 
@@ -22,6 +22,10 @@
                 if(json.action == 'ackTransferSession'){
                         $("#sessionInfo").empty().html("Data transfer started");
                        	uploadFile();	 
+                }else if(json.action == 'newGetSession'){
+                        $("#sessionInfo").empty().html("Receiver has Joined");
+			$("#subbutton").removeAttr("disabled", "disabled");
+			fileSelected();
                 }
 
         }
@@ -116,7 +120,7 @@
     <div id="fileSize"></div>
     <div id="fileType"></div>
     <div class="row">
-      <input type="button" onclick="requestUploadFile()" value="Upload" />
+      <input id="subbutton" type="button" onclick="requestUploadFile()" value="Upload" />
     </div>
     <div id="progressNumber"></div>
     <div id="sessionInfo">test</div>
