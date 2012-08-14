@@ -78,9 +78,8 @@
       }
 
       function uploadComplete(evt) {
-        /* This event is raised when the server send back a response */
-        alert(evt.target.responseText);
-      }
+             $("#sessionInfo").empty().html("Data transfer complete");
+	}
 
       function uploadFailed(evt) {
         alert("There was an error attempting to upload the file.");
